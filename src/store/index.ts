@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
-import counterReducer from './counter/reducers';
+import userReducer from './users/reducers';
+import messageReducer from './message/reducers';
 
 const rootReducer = combineReducers({
-   counter: counterReducer
+  users: userReducer,
+  message: messageReducer
 });
 
 export default rootReducer;
