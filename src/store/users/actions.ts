@@ -1,16 +1,20 @@
 import {
   FETCH_MYSELF,
+  FETCH_USERS,
   FetchMyselfAction,
+  FetchUsersAction,
   LOGIN,
   LoginAction,
   REGISTER,
   RegisterAction,
+  SET_IS_ADMIN,
   SET_MAIL,
   SET_MYSELF,
   SET_PASSWORD,
   SET_TOKEN,
   SET_USERNAME,
   SET_USERS,
+  SetIsAdminAction,
   SetMailAction,
   SetMyselfAction,
   SetPasswordAction,
@@ -48,7 +52,7 @@ export function setToken(token: string): SetTokenAction {
   };
 }
 
-export function setMyself(myself: User): SetMyselfAction {
+export function setMyself(myself: User | null): SetMyselfAction {
   return {
     type: SET_MYSELF,
     myself
@@ -77,5 +81,19 @@ export function register(): RegisterAction {
 export function fetchMyself(): FetchMyselfAction {
   return {
     type: FETCH_MYSELF
+  };
+}
+
+export function setIsAdmin(user: User, isAdmin: boolean): SetIsAdminAction {
+  return {
+    type: SET_IS_ADMIN,
+    user,
+    isAdmin
+  };
+}
+
+export function fetchUsers(): FetchUsersAction {
+  return {
+    type: FETCH_USERS
   };
 }

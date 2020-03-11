@@ -31,3 +31,39 @@ export const myself = (): Promise<User | null> => {
     isAdmin: true
   } : null);
 };
+
+export const setIsAdmin = (user: User, isAdmin: boolean): Promise<User> => {
+  return fetchWithToken(`/api/users/${user.id}`, {
+    method: 'PUT',
+    body: JSON.stringify({...user, isAdmin}),
+    headers: {
+      'content-type': 'application/json',
+    }
+  }).then(res => res.json());
+};
+
+export const fetchUsers = (): Promise<User[]> => {
+  fetchWithToken('/api/users').then(res => res.json());
+  return Promise.resolve([
+    {
+      id: 1,
+      username: 'nbenz',
+      isAdmin: true
+    },
+    {
+      id: 2,
+      username: 'theimgartner',
+      isAdmin: false
+    },
+    {
+      id: 3,
+      username: 'bhiestand',
+      isAdmin: true
+    },
+    {
+      id: 4,
+      username: 'jkobel',
+      isAdmin: true
+    }
+  ]);
+};

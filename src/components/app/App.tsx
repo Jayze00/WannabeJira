@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {orange, teal} from '@material-ui/core/colors';
 import Login from '../pages/login/Login';
+import Error from '../molecules/error/Error';
 import {connect} from 'react-redux';
 import {AppState} from '../../store';
 import {User} from '../../store/users/types';
@@ -44,12 +45,13 @@ const App: React.FC<Props> = ({myself, fetchMyself}) => {
         ? <Login/>
         : <Home/>
       }
+      <Error/>
     </ThemeProvider>
   );
 };
 
 const mapStateToProps = ({users}: AppState) => ({
-  myself: users.myself
+  myself: users.myself,
 });
 
 const mapDispatchToProps = {

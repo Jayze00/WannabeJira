@@ -96,14 +96,17 @@ const Login: React.FC<Props> = ({username, password, mail, login, register, setM
     event.preventDefault();
     setUsernameError(username === '');
     setPasswordError(password === '');
-    if (usernameError || passwordError) {
-      setMessage('Please fill all the fields.', MESSAGE_TYPE_ERROR);
+    if (username === '' || password === '') {
+      setMessage('Please fill in all the fields.', MESSAGE_TYPE_ERROR);
     } else {
       if (onLoginPage) {
         login();
       } else {
         register();
       }
+      setUsername('');
+      setPassword('');
+      setMail('');
     }
   };
 

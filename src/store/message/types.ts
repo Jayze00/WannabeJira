@@ -1,7 +1,7 @@
-export const MESSAGE_TYPE_ERROR = 'MESSAGE_TYPE_ERROR';
-export const MESSAGE_TYPE_WARNING = 'MESSAGE_TYPE_WARNING';
-export const MESSAGE_TYPE_INFO = 'MESSAGE_TYPE_INFO';
-export const MESSAGE_TYPE_SUCCESS = 'MESSAGE_TYPE_SUCCESS';
+export const MESSAGE_TYPE_ERROR = 'error';
+export const MESSAGE_TYPE_WARNING = 'warning';
+export const MESSAGE_TYPE_INFO = 'info';
+export const MESSAGE_TYPE_SUCCESS = 'success';
 
 export type MessageType =
   typeof MESSAGE_TYPE_ERROR

@@ -1,11 +1,19 @@
 import {call, put, select, takeEvery} from 'redux-saga/effects';
 import {SagaIterator} from '@redux-saga/types';
-import {FETCH_MYSELF, LOGIN, REGISTER, SET_TOKEN, SetTokenAction} from './types';
+import {
+  FETCH_MYSELF, FETCH_USERS,
+  LOGIN,
+  REGISTER,
+  SET_IS_ADMIN,
+  SET_TOKEN,
+  SetIsAdminAction,
+  SetTokenAction
+} from './types';
 import * as api from '../../api/users';
 import {getMail, getPassword, getUsername} from './selectors';
 import {setMessage} from '../message/actions';
 import {MESSAGE_TYPE_ERROR} from '../message/types';
-import {setMyself, setToken} from './actions';
+import {setMyself, setToken, setUsers} from './actions';
 
 export function* fetchMyself(): SagaIterator {
   const res = yield call(api.myself);
@@ -41,9 +49,21 @@ export function saveTokenToLocalStorage(action: SetTokenAction): void {
   localStorage.setItem('auth-timestamp', new Date().getTime().toString());
 }
 
+export function* fetchUsers(): SagaIterator {
+  const users = yield call(api.fetchUsers);
+  yield put(setUsers(users));
+}
+
+export function* setIsAdmin(action: SetIsAdminAction): SagaIterator {
+  yield call(api.setIsAdmin, action.user, action.isAdmin);
+  yield call(fetchUsers);
+}
+
 export default function* userSaga(): SagaIterator {
   yield takeEvery(LOGIN, login);
   yield takeEvery(REGISTER, register);
   yield takeEvery(SET_TOKEN, saveTokenToLocalStorage);
   yield takeEvery(FETCH_MYSELF, fetchMyself);
+  yield takeEvery(SET_IS_ADMIN, setIsAdmin);
+  yield takeEvery(FETCH_USERS, fetchUsers);
 }

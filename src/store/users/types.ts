@@ -24,14 +24,17 @@ export const LOGIN = 'LOGIN';
 export const REGISTER = 'REGISTER';
 export const SET_TOKEN = 'SET_TOKEN';
 export const FETCH_MYSELF = 'FETCH_MYSELF';
+export const SET_IS_ADMIN = 'SET_IS_ADMIN';
+export const FETCH_USERS = 'FETCH_USERS';
 
 export type LoginAction = Action<typeof LOGIN>;
 export type RegisterAction = Action<typeof REGISTER>;
 export type FetchMyselfAction = Action<typeof FETCH_MYSELF>;
+export type FetchUsersAction = Action<typeof FETCH_USERS>;
 
 export interface SetMyselfAction {
   type: typeof SET_MYSELF;
-  myself: User;
+  myself: User | null;
 }
 
 export interface SetUsersAction {
@@ -57,4 +60,10 @@ export interface SetMailAction {
 export interface SetTokenAction {
   type: typeof SET_TOKEN;
   token: string;
+}
+
+export interface SetIsAdminAction {
+  type: typeof SET_IS_ADMIN;
+  user: User;
+  isAdmin: boolean;
 }
