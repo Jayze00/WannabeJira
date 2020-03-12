@@ -4,6 +4,7 @@ import {
   Box,
   Container,
   CssBaseline,
+  Grid,
   IconButton,
   Theme,
   Toolbar,
@@ -17,6 +18,7 @@ import {connect} from 'react-redux';
 import {User} from '../../../store/users/types';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import AdminConsole from '../../molecules/adminconsole/AdminConsole';
+import Boards from '../../molecules/boards/Boards';
 
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -28,6 +30,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(3),
     textAlign: 'center'
   },
+  mainContainer: {
+    display: 'flex',
+    marginTop: theme.spacing(4)
+  }
 }));
 
 interface Props {
@@ -67,9 +73,14 @@ const Home: React.FC<Props> = ({myself, setMyself}) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="xl">
-        <Typography variant="h3" className={classes.heading}>Home</Typography>
-      </Container>
+      <main>
+        <Container maxWidth="xl" className={classes.mainContainer}>
+          <Boards/>
+          <Grid container>
+            <Typography>Issues</Typography>
+          </Grid>
+        </Container>
+      </main>
       <AdminConsole open={openDialog} onClose={() => setOpenDialog(false)}/>
     </>
   );
