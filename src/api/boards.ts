@@ -1,31 +1,15 @@
 import {Board, CreateBoardRequest} from '../store/boards/types';
 import {fetchWithToken} from './util';
+import {board1, board2, board3} from './mockdata';
 
 export const fetchBoards = (): Promise<Board[]> => {
   fetchWithToken('/api/boards')
     .then(res => res.json());
 
   return Promise.resolve([
-    {
-      id: 1,
-      name: 'board 1',
-      isOpen: true
-    },
-    {
-      id: 2,
-      name: 'board 2',
-      isOpen: true
-    },
-    {
-      id: 3,
-      name: 'board 3',
-      isOpen: false
-    },
-    {
-      id: 4,
-      name: 'board 4',
-      isOpen: true
-    }
+    board1,
+    board2,
+    board3
   ]);
 };
 

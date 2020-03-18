@@ -1,5 +1,6 @@
 import {User} from '../store/users/types';
 import {fetchWithToken} from './util';
+import {user1, user2, user3, user4} from './mockdata';
 
 export const login = (username: string, password: string): Promise<string | null> => {
   fetch('/api/auth/login', {
@@ -25,11 +26,7 @@ export const register = (username: string, password: string, mail: string): Prom
 export const myself = (): Promise<User | null> => {
   fetchWithToken('/api/users/myself')
     .then(res => res.ok ? res.json() : null);
-  return Promise.resolve(localStorage.getItem('authorization') ? {
-    username: 'nbenz',
-    id: 1,
-    isAdmin: true
-  } : null);
+  return Promise.resolve(localStorage.getItem('authorization') ? user1 : null);
 };
 
 export const setIsAdmin = (user: User, isAdmin: boolean): Promise<User> => {
@@ -45,25 +42,9 @@ export const setIsAdmin = (user: User, isAdmin: boolean): Promise<User> => {
 export const fetchUsers = (): Promise<User[]> => {
   fetchWithToken('/api/users').then(res => res.json());
   return Promise.resolve([
-    {
-      id: 1,
-      username: 'nbenz',
-      isAdmin: true
-    },
-    {
-      id: 2,
-      username: 'theimgartner',
-      isAdmin: false
-    },
-    {
-      id: 3,
-      username: 'bhiestand',
-      isAdmin: true
-    },
-    {
-      id: 4,
-      username: 'jkobel',
-      isAdmin: true
-    }
+    user1,
+    user2,
+    user3,
+    user4
   ]);
 };

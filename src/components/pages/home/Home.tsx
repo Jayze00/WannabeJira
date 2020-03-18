@@ -4,7 +4,6 @@ import {
   Box,
   Container,
   CssBaseline,
-  Grid,
   IconButton,
   Theme,
   Toolbar,
@@ -19,6 +18,7 @@ import {User} from '../../../store/users/types';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import AdminConsole from '../../molecules/adminconsole/AdminConsole';
 import Boards from '../../molecules/boards/Boards';
+import JyraBoard from '../../molecules/jyraboard/JyraBoard';
 
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -76,9 +76,7 @@ const Home: React.FC<Props> = ({myself, setMyself}) => {
       <main>
         <Container maxWidth="xl" className={classes.mainContainer}>
           <Boards/>
-          <Grid container>
-            <Typography>Issues</Typography>
-          </Grid>
+          <JyraBoard/>
         </Container>
       </main>
       <AdminConsole open={openDialog} onClose={() => setOpenDialog(false)}/>

@@ -22,6 +22,7 @@ import {Board} from '../../../store/boards/types';
 import AddIcon from '@material-ui/icons/Add';
 import {setMessage} from '../../../store/message/actions';
 import {MESSAGE_TYPE_ERROR, MessageType} from '../../../store/message/types';
+import {setSelectedBoard} from '../../../store/issues/actions';
 
 const useStyles = makeStyles((theme: Theme) => ({
   textField: {
@@ -42,9 +43,10 @@ interface Props {
   createBoard: (name: string) => void;
   setBoardName: (boardName: string) => void;
   setMessage: (text: string, type: MessageType) => void;
+  setSelectedBoard: (selectedBoard: Board) => void;
 }
 
-const Boards: React.FC<Props> = ({boardCollection, boardName, fetchBoards, createBoard, setBoardName, setMessage}) => {
+const Boards: React.FC<Props> = ({boardCollection, boardName, fetchBoards, createBoard, setBoardName, setMessage, setSelectedBoard}) => {
 
   const classes = useStyles();
 
@@ -65,13 +67,13 @@ const Boards: React.FC<Props> = ({boardCollection, boardName, fetchBoards, creat
   return (
     <>
       <CssBaseline/>
-      <Box maxWidth={350} marginRight={2}>
+      <Box maxWidth={300} marginRight={2}>
         <List>
           <ListSubheader>
             Open Boards
           </ListSubheader>
           {boardCollection.filter(board => board.isOpen).map(board =>
-            <ListItem button key={board.id}>
+            <ListItem button key={board.id} onClick={() => setSelectedBoard(board)}>
               <ListItemText>{board.name}</ListItemText>
             </ListItem>
           )}
@@ -108,7 +110,7 @@ const Boards: React.FC<Props> = ({boardCollection, boardName, fetchBoards, creat
               Closed Boards
             </ListSubheader>
             {boardCollection.filter(board => !board.isOpen).map(board =>
-              <ListItem button key={board.id}>
+              <ListItem button key={board.id} onClick={() => setSelectedBoard(board)}>
                 <ListItemText>{board.name}</ListItemText>
               </ListItem>
             )}
@@ -128,7 +130,8 @@ const mapDispatchToProps = {
   fetchBoards: fetchBoards,
   createBoard: createBoard,
   setBoardName: setBoardName,
-  setMessage: setMessage
+  setMessage: setMessage,
+  setSelectedBoard: setSelectedBoard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Boards);
