@@ -1,16 +1,14 @@
 import {User} from '../store/users/types';
 import {fetchWithToken} from './util';
-import {user1, user2, user3, user4} from './mockdata';
 
 export const login = (username: string, password: string): Promise<string | null> => {
-  fetch('/api/auth/login', {
+  return fetch('/api/auth/login', {
     method: 'POST',
     body: JSON.stringify({username, password}),
     headers: {
       'content-type': 'application/json',
     }
-  }).then(res => res.ok ? res.json() : null);
-  return Promise.resolve('token');
+  }).then(res => res.ok ? res.headers.get('Authorization') : null);
 };
 
 export const register = (username: string, password: string, mail: string): Promise<boolean> => {
@@ -23,10 +21,9 @@ export const register = (username: string, password: string, mail: string): Prom
   }).then(res => res.ok);
 };
 
-export const myself = (): Promise<User | null> => {
-  fetchWithToken('/api/users/myself')
-    .then(res => res.ok ? res.json() : null);
-  return Promise.resolve(localStorage.getItem('authorization') ? user1 : null);
+export const myself = async (): Promise<User | null> => {
+  const res = await fetchWithToken('/api/users/myself');
+  return await res.json();
 };
 
 export const setIsAdmin = (user: User, isAdmin: boolean): Promise<User> => {
@@ -40,11 +37,5 @@ export const setIsAdmin = (user: User, isAdmin: boolean): Promise<User> => {
 };
 
 export const fetchUsers = (): Promise<User[]> => {
-  fetchWithToken('/api/users').then(res => res.json());
-  return Promise.resolve([
-    user1,
-    user2,
-    user3,
-    user4
-  ]);
+  return fetchWithToken('/api/users').then(res => res.json());
 };

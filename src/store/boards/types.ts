@@ -3,7 +3,7 @@ import {Action} from 'redux';
 export interface Board {
   id: number;
   name: string;
-  isOpen: boolean;
+  open: boolean;
 }
 
 export interface BoardState {

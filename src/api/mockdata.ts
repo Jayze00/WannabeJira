@@ -33,24 +33,24 @@ export const user4: User = {
 export const board1: Board = {
   id: 1,
   name: 'board 1',
-  isOpen: true
+  open: true
 };
 
 export const board2: Board = {
   id: 2,
   name: 'board 2',
-  isOpen: true
+  open: true
 };
 
 export const board3: Board = {
   id: 3,
   name: 'board 3',
-  isOpen: false
+  open: false
 };
 
 export const issue1: Issue = {
   id: 1,
-  name: 'issue 1',
+  title: 'issue 1',
   description: 'this is the issue 1 description',
   user: user1,
   status: ISSUE_STATUS_TO_DO,
@@ -59,7 +59,7 @@ export const issue1: Issue = {
 
 export const issue2: Issue = {
   id: 2,
-  name: 'issue 2',
+  title: 'issue 2',
   description: 'this is the issue 2 description',
   user: user1,
   status: ISSUE_STATUS_TO_DO,
@@ -68,7 +68,7 @@ export const issue2: Issue = {
 
 export const issue3: Issue = {
   id: 3,
-  name: 'issue 3',
+  title: 'issue 3',
   description: 'this is the issue 3 description',
   user: user2,
   status: ISSUE_STATUS_DONE,
@@ -77,7 +77,7 @@ export const issue3: Issue = {
 
 export const issue4: Issue = {
   id: 4,
-  name: 'issue 4',
+  title: 'issue 4',
   description: 'this is the issue 4 description',
   user: user2,
   status: ISSUE_STATUS_IN_PROGRESS,
@@ -86,7 +86,7 @@ export const issue4: Issue = {
 
 export const issue5: Issue = {
   id: 5,
-  name: 'issue 5',
+  title: 'issue 5',
   description: 'this is the issue 5 description',
   user: user1,
   status: ISSUE_STATUS_TO_DO,
@@ -95,7 +95,7 @@ export const issue5: Issue = {
 
 export const issue6: Issue = {
   id: 6,
-  name: 'issue 6',
+  title: 'issue 6',
   description: 'this is the issue 6 description',
   user: user1,
   status: ISSUE_STATUS_DONE,
@@ -104,7 +104,7 @@ export const issue6: Issue = {
 
 export const issue7: Issue = {
   id: 7,
-  name: 'issue 7',
+  title: 'issue 7',
   description: 'this is the issue 7 description',
   user: user1,
   status: ISSUE_STATUS_DONE,

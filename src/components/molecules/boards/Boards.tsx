@@ -55,6 +55,7 @@ const Boards: React.FC<Props> = ({boardCollection, boardName, fetchBoards, creat
   const handleCreateBoard = () => {
     if (boardName !== '') {
       createBoard(boardName);
+      setBoardName('');
     } else {
       setMessage('Please provide a board name', MESSAGE_TYPE_ERROR);
     }
@@ -67,12 +68,12 @@ const Boards: React.FC<Props> = ({boardCollection, boardName, fetchBoards, creat
   return (
     <>
       <CssBaseline/>
-      <Box maxWidth={300} marginRight={2}>
+      <Box minWidth={300} width={300} marginRight={2}>
         <List>
           <ListSubheader>
             Open Boards
           </ListSubheader>
-          {boardCollection.filter(board => board.isOpen).map(board =>
+          {boardCollection.filter(board => board.open).map(board =>
             <ListItem button key={board.id} onClick={() => setSelectedBoard(board)}>
               <ListItemText>{board.name}</ListItemText>
             </ListItem>
@@ -109,7 +110,7 @@ const Boards: React.FC<Props> = ({boardCollection, boardName, fetchBoards, creat
             <ListSubheader>
               Closed Boards
             </ListSubheader>
-            {boardCollection.filter(board => !board.isOpen).map(board =>
+            {boardCollection.filter(board => !board.open).map(board =>
               <ListItem button key={board.id} onClick={() => setSelectedBoard(board)}>
                 <ListItemText>{board.name}</ListItemText>
               </ListItem>

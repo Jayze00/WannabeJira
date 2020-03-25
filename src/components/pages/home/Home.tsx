@@ -73,12 +73,12 @@ const Home: React.FC<Props> = ({myself, setMyself}) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <main>
+      <Box component="main">
         <Container maxWidth="xl" className={classes.mainContainer}>
           <Boards/>
           <JyraBoard/>
         </Container>
-      </main>
+      </Box>
       <AdminConsole open={openDialog} onClose={() => setOpenDialog(false)}/>
     </>
   );

@@ -8,7 +8,7 @@ export type IssueStatus = typeof ISSUE_STATUS_TO_DO | typeof ISSUE_STATUS_IN_PRO
 
 export interface Issue {
   id: number;
-  name: string;
+  title: string;
   description: string;
   user: User;
   status: IssueStatus;
@@ -16,13 +16,13 @@ export interface Issue {
 }
 
 export interface IssueCollection {
-  toDo: Issue[];
+  [toDo: string]: Issue[];
   inProgress: Issue[];
   done: Issue[];
 }
 
 export interface NewIssue {
-  name: string;
+  title: string;
   description: string;
   user: User | null;
 }

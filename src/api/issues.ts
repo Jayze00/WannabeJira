@@ -1,12 +1,10 @@
 import {fetchWithToken} from './util';
 import {Board} from '../store/boards/types';
 import {Issue, IssueCollection, NewIssue} from '../store/issues/types';
-import {getMockIssueCollection} from './mockdata';
 
 export const fetchIssues = (board: Board): Promise<IssueCollection> => {
-  fetchWithToken(`/api/boards/${board.id}/issues`)
+  return fetchWithToken(`/api/boards/${board.id}/issues`)
     .then(res => res.json());
-  return Promise.resolve(getMockIssueCollection(board));
 };
 
 export const createIssue = (board: Board, issue: NewIssue): Promise<Issue> => {

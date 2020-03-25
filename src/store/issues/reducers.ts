@@ -1,4 +1,4 @@
-import {IssueState, SET_SELECTED_BOARD, STORE_ISSUES} from './types';
+import {IssueState, SET_NEW_ISSUE, SET_SELECTED_BOARD, STORE_ISSUES} from './types';
 import {createReducer} from '../utility/reducer';
 import {Action} from 'redux';
 
@@ -9,7 +9,7 @@ const initialState: IssueState = {
     done: []
   },
   newIssue: {
-    name: '',
+    title: '',
     description: '',
     user: null
   },
@@ -21,7 +21,8 @@ const issueReducer = createReducer<IssueState, Action>(initialState, {
     ...state,
     issueCollection: action.issueCollection
   }),
-  [SET_SELECTED_BOARD]: (state, action): IssueState => ({...state, selectedBoard: action.selectedBoard})
+  [SET_SELECTED_BOARD]: (state, action): IssueState => ({...state, selectedBoard: action.selectedBoard}),
+  [SET_NEW_ISSUE]: (state, action): IssueState => ({...state, newIssue: action.newIssue})
 });
 
 export default issueReducer;
