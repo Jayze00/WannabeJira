@@ -1,4 +1,18 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Jyra Backend
+
+## Docker image erstellen
+
+* `docker ps`
+
+* `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ` + id des backend containers
+
+* ip adresse vom backend in zeile 29 im nginx.conf.template anpassen
+
+* `npm run build`
+
+* `docker build --tag jyra-client:develop .`
+
+* `docker run -p 8090:8080 jyra-client:develop`
 
 ## Available Scripts
 
