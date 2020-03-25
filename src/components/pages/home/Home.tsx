@@ -62,7 +62,7 @@ const Home: React.FC<Props> = ({myself, setMyself}) => {
             Jyra
           </Typography>
           <Box>
-            {myself?.isAdmin && (
+            {myself?.admin && (
               <IconButton color="inherit" onClick={() => setOpenDialog(true)}>
                 <PeopleOutlineIcon/>
               </IconButton>

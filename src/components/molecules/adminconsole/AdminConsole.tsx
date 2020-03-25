@@ -51,7 +51,7 @@ const Home: React.FC<Props> = ({open, users, onClose, fetchUsers, setIsAdmin}) =
                 <ListItemText>{user.username}</ListItemText>
                 <ListItemSecondaryAction>
                   <Switch
-                    checked={user.isAdmin}
+                    checked={user.admin}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => setIsAdmin(user, event.target.checked)}
                     value={user}
                     inputProps={{'aria-label': 'secondary checkbox'}}

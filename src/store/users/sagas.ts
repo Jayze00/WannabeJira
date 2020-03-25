@@ -36,7 +36,12 @@ export function* register(): SagaIterator {
   const mail = yield select(getMail);
   const success = yield call(api.register, username, password, mail);
   if (success) {
-    yield call(login);
+    const token = yield call(api.login, username, password);
+    if (token) {
+      yield put(setToken(token));
+      yield call(saveTokenToLocalStorage, token);
+      yield call(fetchMyself);
+    }
   } else {
     yield put(setMessage('The username is already taken.', MESSAGE_TYPE_ERROR));
   }

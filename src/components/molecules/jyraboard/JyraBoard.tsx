@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Backdrop,
   Box,
   Button,
   CssBaseline,
@@ -13,7 +14,8 @@ import {
   Select,
   TextField,
   Theme,
-  Typography, useTheme
+  Typography,
+  useTheme
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {AppState} from '../../../store';
@@ -75,10 +77,9 @@ interface Props {
   setNewIssue: (newIssue: NewIssue) => void;
   createIssue: (board: Board, issue: NewIssue) => void;
   updateIssue: (issue: Issue) => void;
-  deleteIssue: (issue: Issue) => void;
 }
 
-const JyraBoard: React.FC<Props> = ({selectedBoard, issueCollection, userCollection, newIssue, fetchIssues, setNewIssue, createIssue, updateIssue, deleteIssue}) => {
+const JyraBoard: React.FC<Props> = ({selectedBoard, issueCollection, userCollection, newIssue, fetchIssues, setNewIssue, createIssue, updateIssue}) => {
 
   const classes = useStyles();
   const theme = useTheme();
@@ -242,8 +243,7 @@ const mapDispatchToProps = {
   fetchIssues: fetchIssues,
   setNewIssue: setNewIssue,
   createIssue: createIssue,
-  updateIssue: updateIssue,
-  deleteIssue: deleteIssue
+  updateIssue: updateIssue
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(JyraBoard);

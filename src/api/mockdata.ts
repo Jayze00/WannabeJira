@@ -10,24 +10,24 @@ import {Board} from '../store/boards/types';
 export const user1: User = {
   id: 1,
   username: 'nbenz',
-  isAdmin: true
+  admin: true
 };
 
 export const user2: User = {
   id: 2,
   username: 'theimgartner',
-  isAdmin: false
+  admin: false
 };
 
 export const user3: User = {
   id: 3,
   username: 'bhiestand',
-  isAdmin: true
+  admin: true
 };
 export const user4: User = {
   id: 4,
   username: 'jkobel',
-  isAdmin: true
+  admin: true
 };
 
 export const board1: Board = {

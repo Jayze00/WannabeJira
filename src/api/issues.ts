@@ -29,6 +29,7 @@ export const updateIssue = (issue: Issue): Promise<Issue> => {
 
 export const deleteIssue = (issue: Issue): Promise<number> => {
   return fetchWithToken(`/api/boards/${issue.board.id}/issues/${issue.id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {}
   }).then(res => res.status);
 };

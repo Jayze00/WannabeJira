@@ -26,14 +26,14 @@ export const myself = async (): Promise<User | null> => {
   return await res.json();
 };
 
-export const setIsAdmin = (user: User, isAdmin: boolean): Promise<User> => {
+export const setIsAdmin = (user: User, isAdmin: boolean): Promise<boolean> => {
   return fetchWithToken(`/api/users/${user.id}`, {
     method: 'PUT',
-    body: JSON.stringify({...user, isAdmin}),
+    body: JSON.stringify({...user, admin: isAdmin}),
     headers: {
       'content-type': 'application/json',
     }
-  }).then(res => res.json());
+  }).then(res => res.ok);
 };
 
 export const fetchUsers = (): Promise<User[]> => {

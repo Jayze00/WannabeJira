@@ -3,7 +3,7 @@ import {Action} from 'redux';
 export interface User {
   id: number;
   username: string;
-  isAdmin: boolean;
+  admin: boolean;
 }
 
 export interface UserState {
