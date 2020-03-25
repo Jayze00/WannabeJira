@@ -24,6 +24,7 @@ import {deleteIssue, updateIssue} from '../../../store/issues/actions';
 import {connect} from 'react-redux';
 import {AppState} from '../../../store';
 import {User} from '../../../store/users/types';
+import {Board} from '../../../store/boards/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -46,9 +47,10 @@ interface Props {
   myself: User | null;
   updateIssue: (issue: Issue) => void;
   deleteIssue: (issue: Issue) => void;
+  selectedBoard: Board | null;
 }
 
-const DraggableIssue: React.FC<Props> = ({issue, index, userCollection, myself, updateIssue, deleteIssue}) => {
+const DraggableIssue: React.FC<Props> = ({issue, index, userCollection, myself, updateIssue, deleteIssue, selectedBoard}) => {
 
   const classes = useStyles();
 
@@ -108,63 +110,69 @@ const DraggableIssue: React.FC<Props> = ({issue, index, userCollection, myself, 
         )}
       </Draggable>
       <Backdrop className={classes.backdrop} open={!!editIssue}>
-      <Box>
-        <Dialog open={!!editIssue} onClose={() => setEditIssue(null)}>
-          <DialogTitle id="form-dialog-title">Edit Issue</DialogTitle>
-          <DialogContent>
-            <Box display="flex" flexDirection="column" minWidth={300}>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="displayName"
-                label="Title"
-                value={editIssue?.title || ''}
-                onChange={handleTitleChange}
-              />
-              <TextField
-                margin="dense"
-                id="description"
-                label="Description"
-                multiline
-                value={editIssue?.description || ''}
-                onChange={handleDescriptionChange}
-              />
-              <FormControl className={classes.select}>
-                <InputLabel id="select-user-label">Assignee</InputLabel>
-                <Select
-                  labelId="select-user-label"
-                  id="demo-simple-select"
-                  value={editIssue?.user.id || ''}
-                  onChange={handleUserChange}
-                >
-                  {userCollection.map(user => (
-                    <MenuItem value={user.id} key={user.id}>{user.username}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setEditIssue(null)}>
-              Cancel
-            </Button>
-            <Button onClick={handleDeleteIssue} variant="outlined">
-              Delete
-            </Button>
-            <Button onClick={handleUpdateIssue} color="primary" variant="contained">
-              Submit
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Box>
-    </Backdrop>
+        <Box>
+          <Dialog open={!!editIssue} onClose={() => setEditIssue(null)}>
+            <DialogTitle id="form-dialog-title">Edit Issue</DialogTitle>
+            <DialogContent>
+              <Box display="flex" flexDirection="column" minWidth={300}>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="displayName"
+                  label="Title"
+                  value={editIssue?.title || ''}
+                  onChange={handleTitleChange}
+                  disabled={!selectedBoard?.open}
+                />
+                <TextField
+                  margin="dense"
+                  id="description"
+                  label="Description"
+                  multiline
+                  value={editIssue?.description || ''}
+                  onChange={handleDescriptionChange}
+                  disabled={!selectedBoard?.open}
+                />
+                <FormControl className={classes.select}>
+                  <InputLabel id="select-user-label">Assignee</InputLabel>
+                  <Select
+                    labelId="select-user-label"
+                    id="demo-simple-select"
+                    value={editIssue?.user.id || ''}
+                    onChange={handleUserChange}
+                    disabled={!selectedBoard?.open}
+                  >
+                    {userCollection.map(user => (
+                      <MenuItem value={user.id} key={user.id}>{user.username}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </DialogContent>
+            {selectedBoard?.open && (
+              <DialogActions>
+                <Button onClick={() => setEditIssue(null)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleDeleteIssue} variant="outlined">
+                  Delete
+                </Button>
+                <Button onClick={handleUpdateIssue} color="primary" variant="contained">
+                  Submit
+                </Button>
+              </DialogActions>
+            )}
+          </Dialog>
+        </Box>
+      </Backdrop>
     </>
   );
 };
 
-const mapStateToProps = ({users}: AppState) => ({
+const mapStateToProps = ({users, issues}: AppState) => ({
   userCollection: users.users,
-  myself: users.myself
+  myself: users.myself,
+  selectedBoard: issues.selectedBoard
 });
 
 const mapDispatchToProps = {

@@ -19,6 +19,7 @@ export const STORE_BOARDS = 'STORE_BOARDS';
 export const SET_BOARD_NAME = 'SET_BOARD_NAME';
 export const FETCH_BOARDS = 'FETCH_BOARDS';
 export const CREATE_BOARD = 'CREATE_BOARD';
+export const CLOSE_BOARD = 'CLOSE_BOARD';
 
 export type FetchBoardsAction = Action<typeof FETCH_BOARDS>;
 
@@ -35,4 +36,9 @@ export interface StoreBoardsAction {
 export interface SetBoardNameAction {
   type: typeof SET_BOARD_NAME;
   boardName: string;
+}
+
+export interface CloseBoardAction {
+  type: typeof CLOSE_BOARD;
+  board: Board;
 }

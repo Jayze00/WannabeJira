@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Backdrop,
   Box,
   Button,
   CssBaseline,
@@ -29,16 +28,11 @@ import {
   IssueCollection,
   NewIssue
 } from '../../../store/issues/types';
-import {
-  createIssue,
-  deleteIssue,
-  fetchIssues,
-  setNewIssue,
-  updateIssue
-} from '../../../store/issues/actions';
+import {createIssue, fetchIssues, setNewIssue, updateIssue} from '../../../store/issues/actions';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import DraggableIssue from '../draggableissue/DraggableIssue';
 import {User} from '../../../store/users/types';
+import {closeBoard} from '../../../store/boards/actions';
 
 const useStyles = makeStyles((theme: Theme) => ({
   column: {
@@ -73,13 +67,15 @@ interface Props {
   issueCollection: IssueCollection;
   newIssue: NewIssue;
   userCollection: User[];
+  myself: User | null;
   fetchIssues: (board: Board) => void;
   setNewIssue: (newIssue: NewIssue) => void;
   createIssue: (board: Board, issue: NewIssue) => void;
   updateIssue: (issue: Issue) => void;
+  closeBoard: (board: Board) => void;
 }
 
-const JyraBoard: React.FC<Props> = ({selectedBoard, issueCollection, userCollection, newIssue, fetchIssues, setNewIssue, createIssue, updateIssue}) => {
+const JyraBoard: React.FC<Props> = ({selectedBoard, issueCollection, userCollection, myself, newIssue, fetchIssues, setNewIssue, createIssue, updateIssue, closeBoard}) => {
 
   const classes = useStyles();
   const theme = useTheme();
@@ -92,6 +88,16 @@ const JyraBoard: React.FC<Props> = ({selectedBoard, issueCollection, userCollect
     }
     // eslint-disable-next-line
   }, [selectedBoard]);
+
+  useEffect(() => {
+    if(!dialogOpen) {
+      setNewIssue({
+        title: '',
+        description: '',
+        user: null
+      });
+    }
+  }, [dialogOpen]);
 
   const onDragEnd = (e: any) => {
     if (e.destination && (e.source.droppableId !== e.destination.droppableId)) {
@@ -121,18 +127,24 @@ const JyraBoard: React.FC<Props> = ({selectedBoard, issueCollection, userCollect
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewIssue({...newIssue, title: event.target.value});
+    if (selectedBoard?.open) {
+      setNewIssue({...newIssue, title: event.target.value});
+    }
   };
 
   const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewIssue({...newIssue, description: event.target.value});
+    if (selectedBoard?.open) {
+      setNewIssue({...newIssue, description: event.target.value});
+    }
   };
 
   const handleUserChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setNewIssue({
-      ...newIssue,
-      user: userCollection.find(user => user.id === event.target.value) || null
-    });
+    if (selectedBoard?.open) {
+      setNewIssue({
+        ...newIssue,
+        user: userCollection.find(user => user.id === event.target.value) || null
+      });
+    }
   };
 
   if (!selectedBoard) {
@@ -143,8 +155,11 @@ const JyraBoard: React.FC<Props> = ({selectedBoard, issueCollection, userCollect
     <>
       <CssBaseline/>
       <Box display="flex" flexDirection="column">
-        <Box p={1}>
+        <Box p={1} display="flex" justifyContent="space-between">
           <Typography variant="h4">{selectedBoard.name}</Typography>
+          {myself?.admin && selectedBoard?.open && (
+            <Button onClick={() => closeBoard(selectedBoard)}>Close Board</Button>
+          )}
         </Box>
         <DragDropContext onDragEnd={onDragEnd}>
           <Box display="flex">
@@ -174,7 +189,7 @@ const JyraBoard: React.FC<Props> = ({selectedBoard, issueCollection, userCollect
                     )}
                   </Droppable>
                 </Box>
-                {status[0] === ISSUE_STATUS_TO_DO && (
+                {status[0] === ISSUE_STATUS_TO_DO && selectedBoard?.open && (
                   <Button variant="contained" color="primary" onClick={handleClickDialogOpen}>
                     New Issue
                   </Button>
@@ -236,14 +251,16 @@ const mapStateToProps = ({issues, users}: AppState) => ({
   selectedBoard: issues.selectedBoard,
   issueCollection: issues.issueCollection,
   newIssue: issues.newIssue,
-  userCollection: users.users
+  userCollection: users.users,
+  myself: users.myself
 });
 
 const mapDispatchToProps = {
   fetchIssues: fetchIssues,
   setNewIssue: setNewIssue,
   createIssue: createIssue,
-  updateIssue: updateIssue
+  updateIssue: updateIssue,
+  closeBoard: closeBoard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(JyraBoard);

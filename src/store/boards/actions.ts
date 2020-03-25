@@ -1,5 +1,7 @@
 import {
   Board,
+  CLOSE_BOARD,
+  CloseBoardAction,
   CREATE_BOARD,
   CreateBoardAction,
   FETCH_BOARDS,
@@ -34,5 +36,12 @@ export function createBoard(name: string): CreateBoardAction {
   return {
     type: CREATE_BOARD,
     board: {name}
+  };
+}
+
+export function closeBoard(board: Board): CloseBoardAction {
+  return {
+    type: CLOSE_BOARD,
+    board
   };
 }
